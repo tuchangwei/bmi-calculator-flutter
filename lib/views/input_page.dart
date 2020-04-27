@@ -3,11 +3,12 @@ import 'dart:wasm';
 
 import 'package:bmi_calculator/constants.dart';
 import 'package:bmi_calculator/models/person_info.dart';
+import 'package:bmi_calculator/view_components/bottom_button.dart';
 import 'package:bmi_calculator/view_components/gender_content.dart';
-import 'package:bmi_calculator/view_components/option_bg_view.dart';
+import 'package:bmi_calculator/view_components/card_view.dart';
 import 'package:bmi_calculator/view_components/weight_age_content.dart';
 import 'package:bmi_calculator/view_models/input_page_model.dart';
-import 'package:bmi_calculator/view_models/result_page.dart';
+import 'package:bmi_calculator/views/result_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class _InputPageState extends State<InputPage> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                      child: OptionBgView(
+                      child: CardView(
                     onPressed: () {
                       setState(() {
                         model.info.gender = Gender.male;
@@ -43,7 +44,7 @@ class _InputPageState extends State<InputPage> {
                     isActive: model.info.gender == Gender.male,
                   )),
                   Expanded(
-                      child: OptionBgView(
+                      child: CardView(
                     onPressed: () {
                       setState(() {
                         model.info.gender = Gender.female;
@@ -59,7 +60,7 @@ class _InputPageState extends State<InputPage> {
               ),
             ),
             Expanded(
-                child: OptionBgView(
+                child: CardView(
                     child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -107,7 +108,7 @@ class _InputPageState extends State<InputPage> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                      child: OptionBgView(
+                      child: CardView(
                     child: WeightAgeContent(
                       type: ContentType.weight,
                       value: model.info.weight,
@@ -132,7 +133,7 @@ class _InputPageState extends State<InputPage> {
                     ),
                   )),
                   Expanded(
-                      child: OptionBgView(
+                      child: CardView(
                     child: WeightAgeContent(
                       type: ContentType.age,
                       value: model.info.age,
@@ -163,20 +164,15 @@ class _InputPageState extends State<InputPage> {
             Container(
               width: double.infinity,
               margin: EdgeInsets.only(top: 10),
-              child: FlatButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return ResultPage();
-                  }));
-                },
-                child: Text(
-                  "CALCULATE YOUR BMI",
-                  style: kLargeButtonTextStyle,
-                ),
-                padding: EdgeInsets.symmetric(vertical: 25, horizontal: 0),
-                color: Color(0xFFEA1556),
-              ),
+              child: BottomButton(
+                  title: "CALCULATE YOUR BMI",
+                  onPressed: () {
+                    model.calculateBMI();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ResultPage(
+                              model: model,
+                            )));
+                  }),
             )
           ],
         ));

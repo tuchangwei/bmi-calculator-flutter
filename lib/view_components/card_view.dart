@@ -1,11 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class OptionBgView extends StatelessWidget {
+class CardView extends StatelessWidget {
   final Function onPressed;
   final Widget child;
   final bool isActive;
-  OptionBgView({this.onPressed, @required this.child, this.isActive = false});
+  CardView({this.onPressed, @required this.child, this.isActive = false});
 
   @override
   Widget build(BuildContext context) {
